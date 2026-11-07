@@ -38,12 +38,23 @@ import os
 import time
 from typing import Any
 
-from fastmcp import FastMCP from fastmcp.server.auth.providers.github import GitHubProvider
-
+from fastmcp import FastMCP
+from fastmcp.server.auth.providers.github import GitHubProvider
 from instagram_mcp import audit, auth, graph_client
 from instagram_mcp import validators as V
 
-auth_provider = GitHubProvider(     client_id=os.environ["GITHUB_CLIENT_ID"],     client_secret=os.environ["GITHUB_CLIENT_SECRET"],     base_url=os.environ["BASE_URL"],     jwt_signing_key=os.environ["JWT_SIGNING_KEY"],     redirect_path="/auth/callback", )  mcp = FastMCP(     name="instagram-mcp",     auth=auth_provider, )
+auth_provider = GitHubProvider(
+    client_id=os.environ["GITHUB_CLIENT_ID"],
+    client_secret=os.environ["GITHUB_CLIENT_SECRET"],
+    base_url=os.environ["BASE_URL"],
+    jwt_signing_key=os.environ["JWT_SIGNING_KEY"],
+    redirect_path="/auth/callback",
+)
+
+mcp = FastMCP(
+    name="instagram-mcp",
+    auth=auth_provider,
+)
 
 # ----------------------------- field selections ----------------------------- #
 PROFILE_FIELDS = ("id,username,name,biography,followers_count,follows_count,"
