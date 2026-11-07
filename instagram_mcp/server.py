@@ -626,6 +626,7 @@ def send_message(recipient_id: str, text: str, account: str | None = None) -> di
     return _guard("send_message", {"recipient_id": recipient_id, "text": V.truncate(text), "account": account}, _impl)
 
 
+
 def _json_str(s: str) -> str:
     """Minimal JSON string encoder for the messages payload."""
     import json
@@ -633,8 +634,12 @@ def _json_str(s: str) -> str:
 
 
 def run() -> None:
-    """Entrypoint for the ``instagram-mcp`` console script and ``python -m`` execution."""
-    mcp.run()
+    """Entrypoint for the instagram-mcp HTTP server."""
+    mcp.run(
+        transport="http",
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", "8000")),
+    )
 
 
 if __name__ == "__main__":
